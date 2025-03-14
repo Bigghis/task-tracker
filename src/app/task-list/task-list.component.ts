@@ -18,7 +18,14 @@ export class TaskListComponent implements OnInit{
   constructor(private taskService: TaskService) {} // dependency injection
 
   ngOnInit(): void {
-    this.tasks = this.taskService.getTasks();
+    this.taskService.getTasks().subscribe((tasks) => {
+      this.tasks = tasks;
+    });
+    console.log("tasks:::::", this.tasks);
+  }
+
+  getCounter(): number {
+    return this.tasks.length;
   }
 
   toggleComplete(id: number): void {
@@ -30,7 +37,12 @@ export class TaskListComponent implements OnInit{
   }
 
   onClearAll(): void {
-    this.tasks = this.taskService.getTasks();
+    this.tasks = [];
+  }
+
+  onAddTask(task: Task): void {
+    this.tasks.push(task);
+    console.log("on AddTask tasks:::::", this.tasks);
   }
 
 }

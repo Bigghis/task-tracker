@@ -22,23 +22,27 @@ export class TaskFormComponent {
   constructor(private taskService: TaskService) {}
 
 
-  ngOnInit(): void {
-    this.counter = this.taskService.getTasks().length;
-  }
   
   addTaskHandler(): void {
+    this.counter = this.taskService.getCounter();
+    console.log("counter:::::", this.counter);
     this.counter++;
     const newTask = {...this.task, id: this.counter};
     this.task = { id: this.counter, title: '', description: '', completed: false }; // reset the task in the form
-    this.taskService.addTask(newTask);
+    this.taskService.addTask(newTask).subscribe((task) => {
+      this.addTask.emit(task); // notify that a new task is added
+    });
   }
 
   addRandomTask(): void {
-    console.log('addRandomTask');
+    this.taskService.addRandomTask().subscribe((task) => {
+      console.log('addRandomTask');
+      this.addTask.emit(task); // notify that a new task is added
+    });
   }
 
   clearTasks(): void {
-    console.log('clearTasks: ', this.taskService.getTasks());
+    console.log('clearTasks');
     this.taskService.clearTasks();
     this.clearAll.emit(); // notify that the tasks are cleared
   }

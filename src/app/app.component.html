@@ -1,5 +1,5 @@
 <h1>Task Tracker</h1> 
-<app-task-form (clearAll)="taskList.onClearAll()" />
+<app-task-form (clearAll)="taskList.onClearAll()" (addTask)="taskList.onAddTask($event)" />
 <app-task-list #taskList />
 
 <router-outlet />
