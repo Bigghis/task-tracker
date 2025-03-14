@@ -27,28 +27,62 @@ The application is structured with the following components:
 
 ### Service
 
-- **TaskService**: A singleton service that manages the task data and operations:
-  - `getTasks()`: Returns the current list of tasks
-  - `deleteTask(id)`: Removes a task by its ID
-  - `addTask(task)`: Adds a new task to the list
-  - `toggleComplete(id)`: Toggles the completion status of a task
-  - `clearTasks()`: Removes all tasks from the list
+- **TaskService**: A singleton service that manages the task data and operations through HTTP requests:
+  - `getTasks()`: Fetches tasks from an API endpoint and returns an Observable of tasks
+  - `deleteTask(id)`: Sends a DELETE request to remove a task by its ID
+  - `addTask(task)`: Sends a POST request to add a new task
+  - `toggleComplete(id)`: Sends a PUT request to update a task's completion status
+  - `clearTasks()`: Sends a DELETE request to remove all tasks
+  - `addRandomTask()`: Fetches a random task from the API
+  - `getCounter()`: Returns the count of currently loaded tasks
 
 ### Model
 
 - **Task**: Defines the structure of a task with the following properties:
   - `id`: A unique identifier for the task
   - `title`: The name or title of the task
-  - `description`: A detailed description of the task
+  - `description`: A detailed description of the task (optional)
   - `completed`: A boolean indicating whether the task is completed
+  - `userId`: The ID of the user who owns the task (when using external APIs)
 
 ## Data Flow
 
 1. The TaskFormComponent collects user input for new tasks
-2. When a user submits a task, the TaskService adds it to the task list
-3. The TaskListComponent displays all tasks from the TaskService
-4. The TaskCardComponent handles individual task interactions (toggling completion)
-5. Task deletions and status changes are managed through the TaskService
+2. When a user submits a task, the TaskService sends an HTTP request to add it to the backend
+3. The TaskListComponent subscribes to the TaskService to display all tasks
+4. The TaskCardComponent handles individual task interactions (toggling completion, deletion)
+5. All data operations are handled asynchronously using RxJS Observables
+
+## HTTP and RxJS Implementation
+
+The application uses Angular's HttpClient for all backend communication:
+
+### HTTP Requests
+- The TaskService encapsulates all HTTP requests to the backend API
+- API endpoints are configured with a base URL constant
+- Each service method returns an Observable that components can subscribe to
+
+### RxJS Usage
+- **Observables**: All service methods return Observables to handle asynchronous operations
+- **Operators**:
+  - `map`: Used to transform API responses (e.g., limiting the number of tasks)
+  - `tap`: Used for side effects like logging and updating local state
+  - `catchError`: Used to handle error cases gracefully
+  
+### Component Subscriptions
+- Components subscribe to service Observables to receive data and updates
+- The TaskListComponent subscribes to getTasks() during initialization
+- Event handlers in components subscribe to service methods to perform actions
+- Components use event emitters to communicate between parent and child components
+
+### Error Handling
+- HTTP errors are caught and logged in the service layer
+- Fallback empty arrays or objects are provided when errors occur
+- Console logging provides debugging information during development
+
+## Backend Integration
+
+The application connects to a mock REST API at JSONPlaceholder for demonstration purposes. In a production environment, you would replace these endpoints with your actual backend services.
 
 ## Styling
 
