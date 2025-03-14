@@ -1,0 +1,11 @@
+<div class="task-list container">
+    <ng-container *ngIf="tasks.length > 0">
+        <div *ngFor="let task of tasks">
+            <app-task-card [task]="task"></app-task-card>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="tasks.length === 0">
+        <p>No tasks found!</p>
+    </ng-container>
+
+</div>

@@ -1,0 +1,37 @@
+
+<div class="task-form-container container">
+    <div class="task-form">
+        <div>
+          <label for="task-name">Title</label>
+          <input type="text" placeholder="Task Name" [id]="'task-name'" [(ngModel)]="task.title"/>
+        </div>
+        <div>
+          <label for="task-description">Description</label>
+          <textarea class="task-description-area" type="text" placeholder="Task Description" [id]="'task-description'" [(ngModel)]="task.description"></textarea>
+        </div>
+        <!-- <div>
+          <label for="task-status">Status</label>
+          <input type="text" placeholder="Task Status" [id]="'task-status'" [(ngModel)]="status"/>
+        </div> -->
+        <!-- <div>
+          <label for="task-priority">Priority</label>
+          <input type="text" placeholder="Task Priority" [id]="'task-priority'" [(ngModel)]="priority"/>
+        </div> -->
+        <!-- <div>
+          <label for="task-created-at">Created At</label>
+          <input type="text" placeholder="Task Created At" disabled [id]="'task-created-at'" value="{{ date | date:'dd/MM/yyyy HH:mm' }}"/>
+        </div> -->
+    </div>
+    <div class="task-form-actions">
+        <button (click)="addTaskHandler()" [disabled]="(!task.title || !task.description)">Create Task</button>
+        <button (click)="addRandomTask()">Add New Random Task</button>
+        <button (click)="clearTasks()">Clear All Tasks</button>      
+    </div>
+</div>
+
+
+<!-- <div>
+    <input [(ngModel)]="newTask.title" placeholder="Task Title" required />
+    <input [(ngModel)]="newTask.description" placeholder="Description" />
+    <button (click)="addTaskHandler()">Add Task</button>
+  </div> -->
