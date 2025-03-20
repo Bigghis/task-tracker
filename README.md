@@ -11,6 +11,10 @@ TaskTracker allows users to:
 - Delete tasks when they're no longer needed
 - Clear all tasks at once
 
+## Theme
+We want add a theme service to the application. The service will be used to change the theme of the application, applying corresponding css classes to the application.
+
+
 ## Application Structure
 
 ### Components
@@ -45,44 +49,7 @@ The application is structured with the following components:
   - `completed`: A boolean indicating whether the task is completed
   - `userId`: The ID of the user who owns the task (when using external APIs)
 
-## Data Flow
 
-1. The TaskFormComponent collects user input for new tasks
-2. When a user submits a task, the TaskService sends an HTTP request to add it to the backend
-3. The TaskListComponent subscribes to the TaskService to display all tasks
-4. The TaskCardComponent handles individual task interactions (toggling completion, deletion)
-5. All data operations are handled asynchronously using RxJS Observables
-
-## HTTP and RxJS Implementation
-
-The application uses Angular's HttpClient for all backend communication:
-
-### HTTP Requests
-- The TaskService encapsulates all HTTP requests to the backend API
-- API endpoints are configured with a base URL constant
-- Each service method returns an Observable that components can subscribe to
-
-### RxJS Usage
-- **Observables**: All service methods return Observables to handle asynchronous operations
-- **Operators**:
-  - `map`: Used to transform API responses (e.g., limiting the number of tasks)
-  - `tap`: Used for side effects like logging and updating local state
-  - `catchError`: Used to handle error cases gracefully
-  
-### Component Subscriptions
-- Components subscribe to service Observables to receive data and updates
-- The TaskListComponent subscribes to getTasks() during initialization
-- Event handlers in components subscribe to service methods to perform actions
-- Components use event emitters to communicate between parent and child components
-
-### Error Handling
-- HTTP errors are caught and logged in the service layer
-- Fallback empty arrays or objects are provided when errors occur
-- Console logging provides debugging information during development
-
-## Backend Integration
-
-The application connects to a mock REST API at JSONPlaceholder for demonstration purposes. In a production environment, you would replace these endpoints with your actual backend services.
 
 ## Styling
 

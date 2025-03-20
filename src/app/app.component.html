@@ -1,5 +1,10 @@
-<h1>Task Tracker</h1> 
-<app-task-form (clearAll)="taskList.onClearAll()" (addTask)="taskList.onAddTask($event)" />
-<app-task-list #taskList />
+<div class="app-container theme-{{themeService.getTheme()}}" >
+    <div class="header-container">
+        <h1>Task Tracker</h1> 
+        <app-settings />
+    </div>
+    <app-task-form (clearAll)="taskList.onClearAll()" (addTask)="taskList.onAddTask($event)" />
+    <app-task-list #taskList />
 
-<router-outlet />
+    <router-outlet />
+</div>
