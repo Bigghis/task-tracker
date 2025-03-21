@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { TaskService } from '../task.service';
 import { Task } from '../model/task';
 import { CommonModule } from '@angular/common';
 import { TaskCardComponent } from '../task-card/task-card.component';
+import { Store } from '@ngrx/store';
+import { addTask } from '../store/tasks.actions';
+
 @Component({
   selector: 'app-task-list',
   imports: [CommonModule, TaskCardComponent],
@@ -10,18 +13,31 @@ import { TaskCardComponent } from '../task-card/task-card.component';
   styleUrl: './task-list.component.css'
 })
 
-export class TaskListComponent implements OnInit{
+export class TaskListComponent implements OnInit {
   tasks: Task[] = [];
   newTask: Task = { id: 0, title: '', description: '', completed: false };
+
+  store = inject(Store);
 
 
   constructor(private taskService: TaskService) {} // dependency injection
 
   ngOnInit(): void {
     this.taskService.getTasks().subscribe((tasks) => {
-      this.tasks = tasks;
-    });
-    console.log("tasks:::::", this.tasks);
+      for (const task of tasks) {
+        this.store.dispatch(addTask(task));
+      }
+    },
+    (error) => {
+      console.error('Error fetching tasks:', error);
+    },
+    () => { // finally
+      this.store.select(state => state.tasks)  
+      .subscribe((tasks) => {
+        this.tasks = tasks;
+      });
+    }
+  );
   }
 
   getCounter(): number {
@@ -31,18 +47,4 @@ export class TaskListComponent implements OnInit{
   toggleComplete(id: number): void {
     this.taskService.toggleComplete(id);
   }
-
-  deleteTask(id: number): void {
-    this.taskService.deleteTask(id);
-  }
-
-  onClearAll(): void {
-    this.tasks = [];
-  }
-
-  onAddTask(task: Task): void {
-    this.tasks.push(task);
-    console.log("on AddTask tasks:::::", this.tasks);
-  }
-
 }

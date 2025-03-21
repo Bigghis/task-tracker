@@ -1,9 +1,11 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, inject } from '@angular/core';
 // import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { TaskService } from '../task.service';
 import { Task } from '../model/task';
+import { Store } from '@ngrx/store';
+import { addTask, clearTasks } from '../store/tasks.actions';
 
 @Component({
   selector: 'app-task-form',
@@ -15,6 +17,7 @@ export class TaskFormComponent {
   @Output() addTask = new EventEmitter<Task>();
   @Output() clearAll = new EventEmitter<void>();
 
+  store = inject(Store);
   counter: number = 0;
 
   task: Task = { id: 0, title: '', description: '', completed: false };
@@ -27,24 +30,22 @@ export class TaskFormComponent {
     this.counter = this.taskService.getCounter();
     console.log("counter:::::", this.counter);
     this.counter++;
-    const newTask = {...this.task, id: this.counter};
+    const newTask: Task = {...this.task, id: this.counter};
     this.task = { id: this.counter, title: '', description: '', completed: false }; // reset the task in the form
-    this.taskService.addTask(newTask).subscribe((task) => {
-      this.addTask.emit(task); // notify that a new task is added
-    });
+    this.store.dispatch(addTask(newTask));
+
   }
 
   addRandomTask(): void {
-    this.taskService.addRandomTask().subscribe((task) => {
+    this.taskService.addRandomTask().subscribe((task: Task) => {
       console.log('addRandomTask');
-      this.addTask.emit(task); // notify that a new task is added
+      this.store.dispatch(addTask(task));
     });
   }
 
   clearTasks(): void {
     console.log('clearTasks');
-    this.taskService.clearTasks();
-    this.clearAll.emit(); // notify that the tasks are cleared
+    this.store.dispatch(clearTasks());
   }
   
 }

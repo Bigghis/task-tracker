@@ -3,7 +3,7 @@
         <h1>Task Tracker</h1> 
         <app-settings />
     </div>
-    <app-task-form (clearAll)="taskList.onClearAll()" (addTask)="taskList.onAddTask($event)" />
+    <app-task-form  />
     <app-task-list #taskList />
 
     <router-outlet />

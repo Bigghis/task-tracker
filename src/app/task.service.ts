@@ -33,25 +33,11 @@ export class TaskService {
     return this.tasks.length;
   }
 
-  deleteTask(id: number): Observable<Task> {
-    console.log(`Task ${id} deleted`);
-    return this.http.delete<Task>(`${TASKS_URL}/${id}`);
-  }
-
-  addTask(task: Task): Observable<Task> {
-    console.log(`Task ${task.title} added`);
-    return this.http.post<Task>(TASKS_URL, task);
-  }
-
   toggleComplete(id: number ): Observable<Task> {      
     console.log(`Task ${id} toggled complete`);
     return this.http.put<Task>(`${TASKS_URL}/${id}`, { completed: true });
   }
 
-  clearTasks(): Observable<Task[]> {
-    console.log(`All tasks cleared`);
-    return this.http.delete<Task[]>(TASKS_URL);
-  }
 
   addRandomTask(): Observable<Task> {
     return this.http.get<Task[]>(TASKS_URL).pipe(
