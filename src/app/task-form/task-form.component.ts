@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output, inject } from '@angular/core';
-// import { CommonModule } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { TaskService } from '../task.service';
@@ -10,7 +10,8 @@ import { TaskType } from '../model/taskType';
 
 @Component({
   selector: 'app-task-form',
-  imports: [FormsModule],
+  standalone: true,
+  imports: [FormsModule, CommonModule],
   templateUrl: './task-form.component.html',
   styleUrl: './task-form.component.css'
 })
@@ -23,10 +24,15 @@ export class TaskFormComponent {
 
   task: Task = { id: 0, title: '', description: '', completed: false, type: TaskType.OTHER };
 
-  constructor(private taskService: TaskService) {}
+  taskTypes = Object.values(TaskType);
 
+  constructor(private taskService: TaskService) {
+    console.log("taskTypes:::::", this.taskTypes);
+    if (!this.taskTypes || this.taskTypes.length === 0) {
+      console.error("TaskTypes array is empty!");
+    }
+  }
 
-  
   addTaskHandler(): void {
     this.counter = this.taskService.getCounter();
     console.log("counter:::::", this.counter);
@@ -34,7 +40,6 @@ export class TaskFormComponent {
     const newTask: Task = {...this.task, id: this.counter};
     this.task = { id: this.counter, title: '', description: '', completed: false, type: TaskType.OTHER }; // reset the task in the form
     this.store.dispatch(addTask(newTask));
-
   }
 
   addRandomTask(): void {
@@ -48,5 +53,4 @@ export class TaskFormComponent {
     console.log('clearTasks');
     this.store.dispatch(clearTasks());
   }
-  
 }

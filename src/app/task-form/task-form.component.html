@@ -2,6 +2,12 @@
 <div class="task-form-container container">
     <div class="task-form">
         <div>
+          <label for="task-type">Type</label>
+          <select id="task-type" [(ngModel)]="task.type">
+            <option *ngFor="let type of taskTypes" [value]="type">{{ type }}</option>
+          </select>
+        </div>
+        <div>
           <label for="task-name">Title</label>
           <input type="text" placeholder="Task Name" [id]="'task-name'" [(ngModel)]="task.title"/>
         </div>
