@@ -1,10 +1,12 @@
 import { Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Task } from '../model/task';
 import { TaskService } from '../task.service';
 import { TaskType } from '../model/taskType';
+import { TaskTypeComponent } from '../type/type.component';
 @Component({
   selector: 'app-task-card',
-  imports: [],
+  imports: [ TaskTypeComponent, CommonModule ],
   templateUrl: './task-card.component.html',
   styleUrl: './task-card.component.css'
 })

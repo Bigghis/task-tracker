@@ -25,3 +25,34 @@
     background-color: #333;
     color: #f5f5f5;
 }
+
+app-task-type {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+app-task-type.family {
+    background-color: yellow;
+}
+
+app-task-type.health {
+    background-color:  blue;
+}
+
+app-task-type.work {
+    background-color: blueviolet;
+}
+
+app-task-type.personal {
+    background-color: green;
+}
+
+app-task-type.other {
+    background-color: orange;
+}
