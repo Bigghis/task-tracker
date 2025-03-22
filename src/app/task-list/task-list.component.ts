@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { TaskCardComponent } from '../task-card/task-card.component';
 import { Store } from '@ngrx/store';
 import { addTask } from '../store/tasks.actions';
+import { TaskType } from '../model/taskType';
 
 @Component({
   selector: 'app-task-list',
@@ -15,7 +16,7 @@ import { addTask } from '../store/tasks.actions';
 
 export class TaskListComponent implements OnInit {
   tasks: Task[] = [];
-  newTask: Task = { id: 0, title: '', description: '', completed: false };
+  newTask: Task = { id: 0, title: '', description: '', completed: false, type: TaskType.OTHER };
 
   store = inject(Store);
 

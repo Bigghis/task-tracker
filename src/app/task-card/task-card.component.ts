@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Task } from '../model/task';
 import { TaskService } from '../task.service';
-
+import { TaskType } from '../model/taskType';
 @Component({
   selector: 'app-task-card',
   imports: [],
@@ -17,7 +17,8 @@ export class TaskCardComponent {
       id: 0,
       title: '',
       description: '',
-      completed: false
+      completed: false,
+      type: TaskType.OTHER
     };
   }
 
