@@ -1,4 +1,4 @@
-import { TaskType } from "./taskType";
+import { TaskTypeKey } from "./taskType";
 
 export interface Task {
   id: number;
@@ -6,5 +6,5 @@ export interface Task {
   description?: string;
   completed: boolean;
   userId?: number;
-  type: TaskType;
+  type: TaskTypeKey;
 }

@@ -1,10 +1,11 @@
-
 <div class="task-form-container container">
     <div class="task-form">
         <div>
           <label for="task-type">Type</label>
           <select id="task-type" [(ngModel)]="task.type">
-            <option *ngFor="let type of taskTypes" [value]="type">{{ type }}</option>
+            <option *ngFor="let typeKey of typeKeys" [value]="typeKey">
+              {{ TaskType[typeKey].icon }} {{ TaskType[typeKey].name }}
+            </option>
           </select>
         </div>
         <div>

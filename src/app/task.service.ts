@@ -1,6 +1,6 @@
 import { Injectable, OnInit } from '@angular/core';
 import { Task } from './model/task';
-import { TaskType } from './model/taskType';
+import { TaskType, TaskTypeKey } from './model/taskType';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
@@ -40,10 +40,10 @@ export class TaskService {
     return this.http.put<Task>(`${TASKS_URL}/${id}`, { completed: true });
   }
 
-  private getRandomTaskType(): TaskType {
-    const taskTypes = Object.values(TaskType);
-    const randomIndex = Math.floor(Math.random() * taskTypes.length);
-    return taskTypes[randomIndex];
+  private getRandomTaskType(): TaskTypeKey {
+    const taskTypeKeys = Object.values(TaskTypeKey);
+    const randomIndex = Math.floor(Math.random() * taskTypeKeys.length);
+    return taskTypeKeys[randomIndex];
   }
 
 

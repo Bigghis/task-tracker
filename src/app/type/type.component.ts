@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { TaskType } from '../model/taskType';
+import { TaskType, TaskTypeKey } from '../model/taskType';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -10,12 +10,13 @@ import { CommonModule } from '@angular/common';
 })
 
 export class TaskTypeComponent {
-  @Input() type: TaskType = TaskType.OTHER;
+  @Input() type: TaskTypeKey = TaskTypeKey.OTHER;
 
-  getTaskType(): string {
-    if (this.type) {
-      return this.type.substring(0, 1);
-    }
-    return '';
+  getTaskTypeName(): string {
+    return TaskType[this.type].name;
+  }
+
+  getTaskTypeIcon(): string {
+    return TaskType[this.type].icon;
   }
 }

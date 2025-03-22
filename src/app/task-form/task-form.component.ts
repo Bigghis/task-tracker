@@ -6,7 +6,7 @@ import { TaskService } from '../task.service';
 import { Task } from '../model/task';
 import { Store } from '@ngrx/store';
 import { addTask, clearTasks } from '../store/tasks.actions';
-import { TaskType } from '../model/taskType';
+import { TaskType, TaskTypeKey } from '../model/taskType';
 
 @Component({
   selector: 'app-task-form',
@@ -22,7 +22,10 @@ export class TaskFormComponent {
   store = inject(Store);
   counter: number = 0;
 
-  task: Task = { id: 0, title: '', description: '', completed: false, type: TaskType.OTHER };
+  TaskType = TaskType;
+  typeKeys = Object.values(TaskTypeKey);
+
+  task: Task = { id: 0, title: '', description: '', completed: false, type: TaskTypeKey.OTHER };
 
   taskTypes = Object.values(TaskType);
 
@@ -38,7 +41,7 @@ export class TaskFormComponent {
     console.log("counter:::::", this.counter);
     this.counter++;
     const newTask: Task = {...this.task, id: this.counter};
-    this.task = { id: this.counter, title: '', description: '', completed: false, type: TaskType.OTHER }; // reset the task in the form
+    this.task = { id: this.counter, title: '', description: '', completed: false, type: TaskTypeKey.OTHER }; // reset the task in the form
     this.store.dispatch(addTask(newTask));
   }
 
